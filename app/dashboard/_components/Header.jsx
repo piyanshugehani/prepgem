@@ -31,10 +31,15 @@ function Header() {
           </Link>
         </li>
         <li>
+          <Link href="/profile" className={`hover:text-primary hover:font-semibold transition-all cursor-pointer ${path == '/profile' && 'text-primary font-semibold'}`}>
+            Profile
+          </Link>
+        </li>
+        {/* <li>
           <Link href="/upgrade" className={`hover:text-primary hover:font-semibold transition-all cursor-pointer ${path == '/upgrade' && 'text-primary font-semibold'}`}>
             Upgrade
           </Link>
-        </li>
+        </li> */}
       </ul>
       <UserButton />
     </div>

@@ -24,7 +24,7 @@ const GraphAlgorithm = () => {
                             className="rounded-md shadow-lg"
                         />
                         <Link
-                            href="/bfsdfs"
+                            href="/questions/2/bfs-dfs"
                             className="block mt-4 px-4 py-2  bg-gradient-to-br from-purple-500 to-indigo-600 text-white rounded-full text-center hover:bg-purple-600"
                         >
                             BFS and DFS
