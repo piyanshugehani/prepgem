@@ -7,7 +7,7 @@ let v1 = null,
   v2 = null;
 let adj = [];
 const delay = 500;
-const color1 = "rgb(0, 204, 0)";
+const color1 = "rgb(100, 0, 204)";
 
 const Canvas = () => {
   const [points, setPoints] = useState([]);
@@ -18,13 +18,13 @@ const Canvas = () => {
   const reset = () => {
     points.forEach((_, i) => {
       const point = document.getElementById(`point${i}`);
-      if (point && (point.style.fill === "blue" || point.style.fill === color1)) {
+      if (point && (point.style.fill === "#1a1f2b" || point.style.fill === color1)) {
         point.style.fill = "#000";
       }
     });
     edges.forEach((_, i) => {
       const edge = document.getElementById(`edge${i}`);
-      if (edge && edge.style.stroke === "blue") {
+      if (edge && edge.style.stroke === "#1a1f2b") {
         edge.style.stroke = "red";
       }
     });
@@ -125,7 +125,7 @@ const Canvas = () => {
           queue.push(vertex);
           animations.push({ x: edgeNo, y: -1, color: "edge" });
           animations.push({ x: edgeNo, y: -1, color: "shrinkEdge" });
-          animations.push({ x: vertex, y: -1, color: "blue" });
+          animations.push({ x: vertex, y: -1, color: "#1a1f2b" });
         }
       });
     }
@@ -135,7 +135,7 @@ const Canvas = () => {
         if (anim.color === "edge") {
           const edge = document.getElementById(`edge${anim.x}`);
           if (edge) {
-            edge.style.stroke = "blue";
+            edge.style.stroke = "#1a1f2b";
             edge.style.strokeWidth = "5";
           }
         } else if (anim.color === "shrinkEdge") {
@@ -168,7 +168,7 @@ const Canvas = () => {
         if (!vis[vertex]) {
           animations.push({ x: edgeNo, y: -1, color: "edge" });
           animations.push({ x: edgeNo, y: -1, color: "shrinkEdge" });
-          animations.push({ x: vertex, y: -1, color: "blue" });
+          animations.push({ x: vertex, y: -1, color: "#1a1f2b" });
           dfsUtil(vertex);
         }
       });
@@ -181,7 +181,7 @@ const Canvas = () => {
         if (anim.color === "edge") {
           const edge = document.getElementById(`edge${anim.x}`);
           if (edge) {
-            edge.style.stroke = "blue";
+            edge.style.stroke = "#1a1f2b";
             edge.style.strokeWidth = "5";
           }
         } else if (anim.color === "shrinkEdge") {
@@ -202,39 +202,43 @@ const Canvas = () => {
   return (
     <div className="bg">
       <Header/>
-      <center className="pt-4 pb-4 text-white bg-gradient-to-r from-indigo-600 to-purple-600 font-semibold text-center py-10">
-        <button className="button button4 mx-2" onClick={() => bfs(src)}>
-          BFS
-        </button>
-        <button className="button button4 mx-2" onClick={() => dfs(src)}>
-          DFS
-        </button>
-        <button className="button button4 mx-2" onClick={() => reset()}>
-          Reset algorithm
-        </button>
-        <button className="button button4 mx-2" onClick={() => clearCanvas()}>
-          Clear Canvas
-        </button>
-        <button className="button button4 mx-2">
-          
-          <input
-          className="text-indigo-600 text-center rounded-lg"
-          type="text"
-          style={{ width: "140px" }}
-          value={"Start/Source : 0"}
-        /> 
-        </button>
-        {/* <label style={{ fontFamily: "Georgia" }}>
-          &nbsp;&nbsp;&nbsp;Source/Starting Vertex &nbsp;
-        </label>
-        <input
-          type="text"
-          style={{ width: "25px" }}
-          id="src"
-          value={0}
-          onChange={(e) => setSrc(Number(e.target.value))}
-        /> */}
-      </center>
+      <div className="py-10 text-white bg-gradient-to-br from-black via-black to-gray-800 shadow-2xl">
+        <div className="flex justify-center items-center gap-4">
+          <button 
+            className="px-6 py-2.5 bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg shadow-lg hover:purple-200 transition-all duration-300 font-medium" 
+            onClick={() => bfs(src)}
+          >
+            BFS
+          </button>
+          <button 
+            className="px-6 py-2.5 bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg shadow-lg hover:purple-200 transition-all duration-300 font-medium"
+            onClick={() => dfs(src)}
+          >
+            DFS
+          </button>
+          <button 
+            className="px-6 py-2.5 bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg shadow-lg  transition-all duration-300 font-medium"
+            onClick={() => reset()}
+          >
+            Reset Algorithm
+          </button>
+          <button 
+            className="px-6 py-2.5 bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg shadow-lg transition-all duration-300 font-medium"
+            onClick={() => clearCanvas()}
+          >
+            Clear Canvas
+          </button>
+          <div className="relative">
+            <input
+              className="px-4 py-2.5 bg-gray-900  rounded-lg text-center text-white placeholder-purple-300/50 focus:outline-none focus:border-purple-500 transition-all duration-300"
+              type="text"
+              style={{ width: "140px" }}
+              value={"Start Node : 0"}
+              readOnly
+            />
+          </div>
+        </div>
+      </div>
       <center>
         <svg
           ref={svgRef}

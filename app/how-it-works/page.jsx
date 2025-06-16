@@ -22,25 +22,20 @@ function Page() {
         <div>
             <Header />
             <div>
-                {/* Introduction Section */}
-                <section className="text-center py-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-md text-white">
-                    <h1 className="text-4xl font-bold">AI Mock Interview Platform</h1>
-                    <p className="mt-2 text-lg">Revolutionizing interview prep with intelligent feedback and real-time analysis.</p>
-                </section>
-            <div className='mx-5 md:mx-20 lg:mx-36 mt-10 space-y-8 pb-10'>
+            <div className='mx-5 md:mx-20 lg:mx-36 mt-10 space-y-12 pb-10'>
                 {/* Roadmap Timeline */}
-                <section className="space-y-6">
-                    <h2 className="text-3xl font-semibold text-indigo-700">Platform Roadmap</h2>
-                    <div className="roadmap-timeline space-y-4">
+                <section className="space-y-8">
+                    <h2 className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">Platform Roadmap</h2>
+                    <div className="roadmap-timeline space-y-6">
                         <motion.div
                             initial="hidden"
                             animate="visible"
                             variants={benefitVariants}
-                            className="bg-white p-6 rounded-lg shadow-lg"
+                            className="bg-gradient-to-br from-[#1a1a2e] to-[#16213e] p-8 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-purple-900/20 backdrop-blur-sm text-gray-200 hover:shadow-purple-900/5 transition-all duration-300"
                         >
-                            <h3 className="text-xl font-semibold">Phase 1: User Onboarding & Profile Setup</h3>
-                            <p>
-                                The first step is a seamless onboarding experience where users can set up their profiles, input career preferences, and indicate the type of interviews they want to practice. AI will analyze users’ profiles to suggest mock interviews that align with their career goals, job type, and industry.
+                            <h3 className="text-2xl font-semibold bg-gradient-to-r from-purple-400 to-purple-500 bg-clip-text text-transparent mb-4">Phase 1: User Onboarding & Profile Setup</h3>
+                            <p className="leading-relaxed">
+                                The first step is a seamless onboarding experience where users can set up their profiles, input career preferences, and indicate the type of interviews they want to practice. AI will analyze users' profiles to suggest mock interviews that align with their career goals, job type, and industry.
                             </p>
                         </motion.div>
 
@@ -48,11 +43,11 @@ function Page() {
                             initial="hidden"
                             animate="visible"
                             variants={benefitVariants}
-                            className="bg-white p-6 rounded-lg shadow-lg"
+                            className="bg-gradient-to-br from-[#1a1a2e] to-[#16213e] p-8 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-purple-900/20 backdrop-blur-sm text-gray-200 hover:shadow-purple-900/5 transition-all duration-300"
                         >
-                            <h3 className="text-xl font-semibold">Phase 2: Personalized Mock Interview Sessions</h3>
-                            <p>
-                                Once the user’s profile is set up, they are ready for their first mock interview. The platform uses AI-driven interview simulations to simulate real-world job interviews tailored to the user’s skill level and job requirements. Real-time feedback is provided during and after each session to enhance user preparation.
+                            <h3 className="text-2xl font-semibold bg-gradient-to-r from-purple-400 to-purple-500 bg-clip-text text-transparent mb-4">Phase 2: Personalized Mock Interview Sessions</h3>
+                            <p className="leading-relaxed">
+                                Once the user's profile is set up, they are ready for their first mock interview. The platform uses AI-driven interview simulations to simulate real-world job interviews tailored to the user's skill level and job requirements. Real-time feedback is provided during and after each session to enhance user preparation.
                             </p>
                         </motion.div>
 
@@ -60,31 +55,30 @@ function Page() {
                             initial="hidden"
                             animate="visible"
                             variants={benefitVariants}
-                            className="bg-white p-6 rounded-lg shadow-lg"
+                            className="bg-gradient-to-br from-[#1a1a2e] to-[#16213e] p-8 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-purple-900/20 backdrop-blur-sm text-gray-200 hover:shadow-purple-900/5 transition-all duration-300"
                         >
-                            <h3 className="text-xl font-semibold">Phase 3: Feedback Analysis & Recommendations</h3>
-                            <p>
+                            <h3 className="text-2xl font-semibold bg-gradient-to-r from-purple-400 to-purple-500 bg-clip-text text-transparent mb-4">Phase 3: Feedback Analysis & Recommendations</h3>
+                            <p className="leading-relaxed">
                                 After completing a mock interview, the AI system provides detailed feedback, including areas for improvement in communication, technical skills, and behavioral aspects. Personalized recommendations are given to help users improve their weak areas. This phase aims to provide actionable insights for continuous learning and growth.
                             </p>
                         </motion.div>
                     </div>
                 </section>
 
-
                 {/* How Users Benefit Section */}
-                <section className="bg-gradient-to-br from-purple-500 to-indigo-600 p-8 rounded-lg shadow-md text-white">
-                    <h2 className="text-3xl font-semibold">How Users Benefit</h2>
-                    <div className="flex flex-col md:flex-row gap-4 mt-4">
+                <section className="bg-gradient-to-br from-[#1a1a2e] to-[#16213e] p-10 rounded-xl shadow-lg border border-purple-900/20 backdrop-blur-sm">
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent mb-8">How Users Benefit</h2>
+                    <div className="grid md:grid-cols-3 gap-6">
                         {['Personalized Feedback', 'Instant Analysis', '24/7 Access'].map((benefit, idx) => (
                             <motion.div
                                 key={idx}
-                                className="p-6 bg-violet-400 rounded-lg shadow-lg"
+                                className="p-6 bg-black/40 rounded-xl border border-purple-900/10 shadow-lg hover:shadow-purple-900/5 transition-all duration-300"
                                 initial="hidden"
                                 animate="visible"
                                 variants={benefitVariants}
                             >
-                                <h3 className="text-2xl font-semibold">{benefit}</h3>
-                                <p>Details about {benefit} that improve user experience and success rate.</p>
+                                <h3 className="text-2xl font-semibold bg-gradient-to-r from-purple-400 to-purple-500 bg-clip-text text-transparent mb-3">{benefit}</h3>
+                                <p className="text-gray-300 leading-relaxed">Details about {benefit} that improve user experience and success rate.</p>
                             </motion.div>
                         ))}
                     </div>

@@ -37,16 +37,20 @@ function InterviewList() {
 
     return (
         <div>
-            <h2 className="text-2xl font-semibold text-indigo-700 py-4">Previous Interviews</h2>
+            <h2 className="text-2xl font-semibold text-purple-400 py-4">Previous Interviews</h2>
             <div className="space-y-4">
-                {list && list.map((interview, index) => (
-                    <div 
-                        key={index} 
-                        ref={(el) => interviewListRef.current[index] = el} // Add reference for each interview card
-                    >
-                        <InterviewCard interview={interview} />
-                    </div>
-                ))}
+                {list && list.length > 0 ? (
+                    list.map((interview, index) => (
+                        <div 
+                            key={index} 
+                            ref={(el) => interviewListRef.current[index] = el} // Add reference for each interview card
+                        >
+                            <InterviewCard interview={interview} />
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-gray-500 text-center py-4 pb-80">No interviews available</p>
+                )}
             </div>
         </div>
     );

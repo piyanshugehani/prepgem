@@ -24,11 +24,7 @@ function page() {
     <div>
             <Header />
             <div>
-                {/* Introduction Section */}
-                <section className="text-center py-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-md text-white">
-                    <h1 className="text-4xl font-bold">AI Mock Interview Platform</h1>
-                    <p className="mt-2 text-lg">Revolutionizing interview prep with intelligent feedback and real-time analysis.</p>
-                </section>
+                
                 <Visualizer/>
             
                 

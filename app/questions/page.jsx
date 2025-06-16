@@ -5,11 +5,9 @@ import Header from '../dashboard/_components/Header'
 import Link from 'next/link';
 
 function Page() {
-  // Refs for elements to animate
   const toolRefs = useRef([]);
   toolRefs.current = [];
 
-  // Add refs to each tool div dynamically
   const addToRefs = (el) => {
     if (el && !toolRefs.current.includes(el)) {
       toolRefs.current.push(el);
@@ -17,17 +15,15 @@ function Page() {
   };
 
   useEffect(() => {
-    // GSAP animation for all tool items
     toolRefs.current.forEach((el, index) => {
       gsap.fromTo(
         el,
-        { opacity: 0, y: 20 }, // Starting position
-        { opacity: 1, y: 0, duration: 0.5, delay: index * 0.2, ease: 'power3.out' } // Ending position
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, delay: index * 0.2, ease: 'power3.out' }
       );
     });
   }, []);
 
-  // Technical tools data
   const techTools = [
     {
       id: 1,
@@ -49,7 +45,6 @@ function Page() {
     }
   ];
 
-  // Non-technical tools data
   const nonTechTools = [
     {
       id: 1,
@@ -69,26 +64,17 @@ function Page() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-black via-black to-purple-950/20">
       <Header />
-      
-      {/* Hero Section */}
-      <section className="text-center py-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-md text-white">
-        <h1 className="text-4xl font-bold">Ace Your Next Interview</h1>
-        <p className="mt-4 text-lg md:text-lg max-w-5xl mx-auto px-4">
-          Elevate your interview preparation with our comprehensive tools and resources designed to help you succeed.
-        </p>
-      </section>
 
       <div className="mx-4 md:mx-12 lg:mx-24 xl:mx-36">
-        {/* Technical Tools Section */}
         <section className="py-16">
           <div className="flex items-center justify-center mb-8">
-            <div className="w-12 h-1 bg-indigo-500 mr-4"></div>
-            <h2 className="text-3xl font-bold text-indigo-800">Technical Visualization Tools</h2>
-            <div className="w-12 h-1 bg-indigo-500 ml-4"></div>
+            <div className="w-12 h-0.5 bg-gradient-to-r from-purple-600 to-purple-400 mr-4"></div>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent">Technical Visualization Tools</h2>
+            <div className="w-12 h-0.5 bg-gradient-to-r from-purple-400 to-purple-600 ml-4"></div>
           </div>
-          <p className="text-gray-600 text-center max-w-3xl mx-auto mb-10">
+          <p className="text-gray-300 text-center max-w-3xl mx-auto mb-10">
             Interactive tools to help you visualize and understand complex algorithms and data structures that commonly appear in technical interviews.
           </p>
           
@@ -97,13 +83,13 @@ function Page() {
               <div
                 key={tool.id}
                 ref={addToRefs}
-                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all border-t-4 border-indigo-500"
+                className="bg-gradient-to-br from-gray-900 via-purple-950/30 to-purple-900/20 p-6 rounded-xl shadow-lg hover:shadow-purple-500/10 transition-all backdrop-blur-sm border border-purple-500/10 hover:border-purple-500/30"
               >
-                <h3 className="text-xl font-semibold text-indigo-800">{tool.name}</h3>
-                <p className="mt-3 text-gray-600 h-24">{tool.description}</p>
+                <h3 className="text-xl font-semibold bg-gradient-to-r from-purple-200 to-purple-300 bg-clip-text text-transparent">{tool.name}</h3>
+                <p className="mt-3 text-gray-300 h-24">{tool.description}</p>
                 <div className="mt-4">
-                  <Link href={tool.link} className="inline-block text-white bg-indigo-600 py-2 px-6 rounded-md hover:bg-indigo-700 transition-all">
-                    Launch Tool
+                  <Link href={tool.link} className="inline-block bg-gradient-to-r from-purple-500 to-purple-700 text-white py-2 px-6 rounded-lg hover:from-purple-600 hover:to-purple-800 transition-all shadow-md hover:shadow-purple-500/25">
+                    Practice
                   </Link>
                 </div>
               </div>
@@ -111,14 +97,13 @@ function Page() {
           </div>
         </section>
 
-        {/* Non-Technical Tools Section */}
-        <section className="py-16 bg-gray-100 rounded-xl">
+        <section className="py-16 bg-gradient-to-br from-purple-950/30 via-black to-purple-950/20 rounded-2xl backdrop-blur-sm border border-purple-500/10">
           <div className="flex items-center justify-center mb-8">
-            <div className="w-12 h-1 bg-teal-500 mr-4"></div>
-            <h2 className="text-3xl font-bold text-teal-800">Non-Technical Preparation Tools</h2>
-            <div className="w-12 h-1 bg-teal-500 ml-4"></div>
+            <div className="w-12 h-0.5 bg-gradient-to-r from-purple-600 to-purple-400 mr-4"></div>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent">Non-Technical Preparation Tools</h2>
+            <div className="w-12 h-0.5 bg-gradient-to-r from-purple-400 to-purple-600 ml-4"></div>
           </div>
-          <p className="text-gray-600 text-center max-w-3xl mx-auto mb-10">
+          <p className="text-gray-200 text-center max-w-3xl mx-auto mb-10">
             Comprehensive resources to help you master behavioral questions, improve communication skills, and prepare for all aspects of the interview process.
           </p>
           
@@ -127,12 +112,12 @@ function Page() {
               <div
                 key={tool.id}
                 ref={addToRefs}
-                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all border-t-4 border-teal-500"
+                className="bg-gradient-to-br from-black/80 to-purple-950/10 p-6 rounded-xl shadow-lg hover:shadow-purple-500/10 transition-all backdrop-blur-sm border border-purple-500/10 hover:border-purple-500/30"
               >
-                <h3 className="text-xl font-semibold text-teal-800">{tool.name}</h3>
-                <p className="mt-3 text-gray-600 h-24">{tool.description}</p>
+                <h3 className="text-xl font-semibold bg-gradient-to-r from-purple-200 to-purple-300 bg-clip-text text-transparent">{tool.name}</h3>
+                <p className="mt-3 text-gray-300 h-24">{tool.description}</p>
                 <div className="mt-4">
-                  <button className="inline-block text-white bg-teal-600 py-2 px-6 rounded-md hover:bg-teal-700 transition-all">
+                  <button className="inline-block bg-gradient-to-r from-purple-500 to-purple-700 text-white py-2 px-6 rounded-lg hover:from-purple-600 hover:to-purple-800 transition-all shadow-md hover:shadow-purple-500/25">
                     Access Tool
                   </button>
                 </div>
@@ -141,108 +126,47 @@ function Page() {
           </div>
         </section>
 
-        {/* Progress Section */}
-        <section className="py-16 my-16 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center">
-          <h2 className="text-3xl font-bold">Track Your Progress</h2>
-          <p className="mt-4 text-lg max-w-3xl mx-auto px-4">
-            Monitor your preparation journey with detailed analytics and personalized insights to identify your strengths and areas for improvement.
-          </p>
-          
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto px-4">
-            <div className="bg-white bg-opacity-10 backdrop-blur-sm p-6 rounded-lg">
-              <h3 className="text-xl font-semibold">Completed Sessions</h3>
-              <div className="mt-3 text-4xl font-bold">45</div>
-              <p className="mt-2 text-sm opacity-80">+12 this week</p>
-            </div>
-            
-            <div className="bg-white bg-opacity-10 backdrop-blur-sm p-6 rounded-lg">
-              <h3 className="text-xl font-semibold">Tools Mastered</h3>
-              <div className="mt-3 text-4xl font-bold">7</div>
-              <p className="mt-2 text-sm opacity-80">+2 this week</p>
-            </div>
-            
-            <div className="bg-white bg-opacity-10 backdrop-blur-sm p-6 rounded-lg">
-              <h3 className="text-xl font-semibold">Avg. Performance</h3>
-              <div className="mt-3 text-4xl font-bold">87%</div>
-              <p className="mt-2 text-sm opacity-80">+5% improvement</p>
-            </div>
-          </div>
-          
-          <div className="mt-10">
-            <Link href="/profile" className="bg-white text-indigo-700 font-medium py-3 px-6 rounded-full hover:bg-gray-100 transition-all">
-              View Full Analytics
-            </Link>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
         <section className="py-16">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Success Stories</h2>
+          <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent mb-12">Success Stories</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="text-yellow-500 flex mb-4">
-                ★★★★★
-              </div>
-              <p className="text-gray-600 italic mb-4">
-                "The algorithm visualizers helped me truly understand complex concepts that I was struggling with. I aced my technical interview at Google!"
-              </p>
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-bold">
-                  JS
+            {[1, 2, 3].map((index) => (
+              <div key={index} className="bg-gradient-to-br from-purple-950/30 via-black to-purple-950/20 p-6 rounded-xl shadow-lg backdrop-blur-sm border border-purple-500/10">
+                <div className="text-purple-400 flex mb-4">
+                  ★★★★★
                 </div>
-                <div className="ml-3">
-                  <h4 className="font-semibold">Jane Smith</h4>
-                  <p className="text-sm text-gray-500">Software Engineer at Google</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="text-yellow-500 flex mb-4">
-                ★★★★★
-              </div>
-              <p className="text-gray-600 italic mb-4">
-                "The behavioral question simulator gave me confidence to tackle the toughest questions. I was prepared for everything they asked!"
-              </p>
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-bold">
-                  MP
-                </div>
-                <div className="ml-3">
-                  <h4 className="font-semibold">Michael Parker</h4>
-                  <p className="text-sm text-gray-500">Product Manager at Amazon</p>
+                <p className="text-gray-200 italic mb-4">
+                  {index === 1 ? 
+                    '"The algorithm visualizers helped me truly understand complex concepts that I was struggling with. I aced my technical interview at Google!"' :
+                    index === 2 ?
+                    '"The behavioral question simulator gave me confidence to tackle the toughest questions. I was prepared for everything they asked!"' :
+                    '"The salary negotiation coach helped me increase my offer by 15%! Best investment Ive ever made in my career."'
+                  }
+                </p>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-800 rounded-full flex items-center justify-center text-white font-bold">
+                    {index === 1 ? 'JS' : index === 2 ? 'MP' : 'AL'}
+                  </div>
+                  <div className="ml-3">
+                    <h4 className="font-semibold text-purple-200">
+                      {index === 1 ? 'Jane Smith' : index === 2 ? 'Michael Parker' : 'Aisha Lee'}
+                    </h4>
+                    <p className="text-sm text-gray-400">
+                      {index === 1 ? 'Software Engineer at Google' : index === 2 ? 'Product Manager at Amazon' : 'UX Designer at Microsoft'}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="text-yellow-500 flex mb-4">
-                ★★★★★
-              </div>
-              <p className="text-gray-600 italic mb-4">
-                "The salary negotiation coach helped me increase my offer by 15%! Best investment I've ever made in my career."
-              </p>
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-bold">
-                  AL
-                </div>
-                <div className="ml-3">
-                  <h4 className="font-semibold">Aisha Lee</h4>
-                  <p className="text-sm text-gray-500">UX Designer at Microsoft</p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* Call to Action */}
         <section className="py-16 text-center">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Ready to Ace Your Next Interview?</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-200 to-purple-100 bg-clip-text text-transparent mb-6">Ready to Ace Your Next Interview?</h2>
+          <p className="text-gray-300 max-w-2xl mx-auto mb-8">
             Start preparing today with our comprehensive suite of interview preparation tools designed to help you succeed.
           </p>
-          <Link href="/register" className="bg-indigo-600 text-white font-medium py-3 px-8 rounded-full hover:bg-indigo-700 transition-all">
+          <Link href="/dashboard" className="inline-block bg-gradient-to-r from-purple-500 to-purple-700 text-white font-medium py-3 px-8 rounded-full hover:from-purple-600 hover:to-purple-800 transition-all shadow-lg hover:shadow-purple-500/25">
             Get Started Now
           </Link>
         </section>
