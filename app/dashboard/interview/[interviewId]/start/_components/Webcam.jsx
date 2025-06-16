@@ -161,7 +161,7 @@ function WebcamComponent({data, interviewQues, activeIndex, setActiveIndex, user
   return (
     <div>
       <div className='flex justify-end items-center gap-2'>
-        {activeIndex > 0 && <Button onClick={() => setActiveIndex(activeIndex-1)}>{"< "}Prev</Button>}
+        
         {activeIndex != interviewQues?.length-1 && <Button onClick={() => setActiveIndex(activeIndex+1)}>Next{" >"}</Button>}
         {activeIndex == interviewQues?.length-1 && 
           <Button onClick={handleEndInterview} disabled={loader}>

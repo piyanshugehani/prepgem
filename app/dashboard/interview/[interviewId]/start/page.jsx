@@ -50,6 +50,7 @@ export default function StartInterview({ params }) {
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 gap-10 my-10'>
             <Ques 
+            className="text-purple-200"
                 interviewQues={interviewQues} 
                 activeIndex={activeIndex} 
                 setActiveIndex={setActiveIndex}

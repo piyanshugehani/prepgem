@@ -103,42 +103,75 @@ function AddNew() {
   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-purple-400/10 blur-3xl -z-10"></div>
 </section>
         
-            <Dialog open={openDialog}>
+<Dialog open={openDialog}>
+    <DialogContent className="bg-gradient-to-br from-gray-900 to-black border border-purple-500/20">
+        <DialogHeader className="space-y-4">
+            <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-purple-300 bg-clip-text text-transparent">
+                Tell us more about your job details
+            </DialogTitle>
+            <DialogDescription>
+                <div className="space-y-6">
+                    <h2 className="text-slate-300">Add details for job position/role, job description and years of experience</h2>
 
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Tell us more about your job details</DialogTitle>
-                        <DialogDescription>
-                            <div>
-                                <h2>Add details for job position/role, job description and years of experience</h2>
+                    <form onSubmit={onSubmit} className="space-y-5">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-purple-300">Job Position/Role</label>
+                            <Input 
+                                className="bg-gray-800/50 border-purple-500/30 focus:border-purple-400 focus:ring-purple-400/20"
+                                placeholder="Eg. Full Stack Dev" 
+                                onChange={(e) => setJobPos(e.target.value)} 
+                                required
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-purple-300">Job Description (Tech Stack)</label>
+                            <Textarea 
+                                className="bg-gray-800/50 border-purple-500/30 focus:border-purple-400 focus:ring-purple-400/20 min-h-[100px]"
+                                placeholder="Eg. React, Angular, etc" 
+                                onChange={(e) => setJobDesc(e.target.value)} 
+                                required
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-purple-300">Years of experience</label>
+                            <Input 
+                                className="bg-gray-800/50 border-purple-500/30 focus:border-purple-400 focus:ring-purple-400/20"
+                                placeholder="Eg. 5" 
+                                type="number" 
+                                max="50" 
+                                onChange={(e) => setJobExp(e.target.value)} 
+                                required
+                            />
+                        </div>
 
-                                <form onSubmit={onSubmit}>
-                                    <div className='mt-7 my-3'>
-                                        <label>Job Position/Role</label>
-                                        <Input placeholder="Eg. Full Stack Dev" onChange={(e) => setJobPos(e.target.value)} required></Input>
-                                    </div>
-                                    <div className='my-3'>
-                                        <label>Job Description (Tech Stack)</label>
-                                        <Textarea placeholder="Eg. React,Angular,etc" onChange={(e) => setJobDesc(e.target.value)} required></Textarea>
-                                    </div>
-                                    <div className='my-3'>
-                                        <label>Years of experience</label>
-                                        <Input placeholder="Eg. 5" type="number" max="50" onChange={(e) => setJobExp(e.target.value)} required></Input>
-                                    </div>
-
-                                    <div className='flex gap-5 justify-end'>
-                                        <Button type="button" variant="ghost" onClick={() => setOpenDialog(false)}>Cancel</Button>
-                                        <Button type="submit" disabled={loading}>
-                                            {loading ? <><LoaderCircle className='animate-spin'/> {" "}Generating..</> : "Start Interview"}</Button>
-                                    </div>
-                                </form>
-                            </div>
-                        </DialogDescription>
-
-                    </DialogHeader>
-                </DialogContent>
-            </Dialog>
-
+                        <div className="flex gap-4 justify-end pt-4">
+                            <Button 
+                                type="button" 
+                                variant="ghost" 
+                                onClick={() => setOpenDialog(false)}
+                                className="text-purple-300 hover:text-purple-200 hover:bg-purple-500/10"
+                            >
+                                Cancel
+                            </Button>
+                            <Button 
+                                type="submit" 
+                                disabled={loading}
+                                className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg shadow-purple-500/25"
+                            >
+                                {loading ? (
+                                    <>
+                                        <LoaderCircle className="animate-spin mr-2" /> 
+                                        Generating...
+                                    </>
+                                ) : "Start Interview"}
+                            </Button>
+                        </div>
+                    </form>
+                </div>
+            </DialogDescription>
+        </DialogHeader>
+    </DialogContent>
+</Dialog>
         </div>
 
     )
