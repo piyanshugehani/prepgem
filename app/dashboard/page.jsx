@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 function Dashboard() {
   return (
-    <div className='my-6 h-screen'>
+    <div className='my-6 min-h-[90vh]'>
      
       
 

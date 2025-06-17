@@ -3,11 +3,14 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-
+import { useUser } from "@clerk/nextjs";
+import { and, eq } from "drizzle-orm";
 import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
 import { createFeedback } from "@/lib/actions/general.action";
+import { db } from "@/utils/db";
+import { allowedUsers } from "@/utils/schema";
 
 const CallStatus = {
   INACTIVE: "INACTIVE",
@@ -25,6 +28,7 @@ const Agent = ({
   questions,
 }) => {
   const router = useRouter();
+  const { user } = useUser();
   const [callStatus, setCallStatus] = useState(CallStatus.INACTIVE);
   const [messages, setMessages] = useState([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -110,31 +114,72 @@ const Agent = ({
   }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
 
   const handleCall = async () => {
-    setCallStatus(CallStatus.CONNECTING);
+    try {
+      console.log("email", user.primaryEmailAddress.emailAddress)
+      // Check if user is allowed to use this feature
+      const allowedUser = await db
+        .select({
+          email: allowedUsers.email,
+          status: allowedUsers.status
+        })
+        .from(allowedUsers)
+        .where(
+          and(
+            eq(allowedUsers.email, user.primaryEmailAddress.emailAddress),
+            eq(allowedUsers.status, 'approved')
+          )
+        );
+      console.log("allowedUser", allowedUser)
+      const isAllowed = allowedUser.length > 0;
 
-    if (type === "generate") {
-      await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID, {
-        variableValues: {
-          username: userName,
-          userid: userId,
-        },
-      });
-    } else {
-      let formattedQuestions = "";
-      if (questions) {
-        formattedQuestions = questions
-          .map((question) => `- ${question}`)
-          .join("\n");
+      if (!isAllowed) {
+        // If user is not allowed, show alert and handle request submission
+        const userConfirmed = window.confirm(
+          "You need admin approval to use this feature. Would you like to submit a request?"
+        );
+        let userEmail = user.primaryEmailAddress.emailAddress;
+        if (userConfirmed) {
+          // Send access request
+          await fetch('/api/send-request', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userEmail })
+          });
+          alert("Your request has been submitted. Please wait for admin approval.");
+        }
+        return;
       }
+      // If user is allowed, proceed with the call
+      setCallStatus(CallStatus.CONNECTING);
 
-      await vapi.start(interviewer, {
-        variableValues: {
-          questions: formattedQuestions,
-        },
-      });
+      if (type === "generate") {
+        await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID, {
+          variableValues: {
+            username: userName,
+            userid: userId,
+          },
+        });
+      } else {
+        let formattedQuestions = "";
+        if (questions) {
+          formattedQuestions = questions
+            .map((question) => `- ${question}`)
+            .join("\n");
+        }
+
+        await vapi.start(interviewer, {
+          variableValues: {
+            questions: formattedQuestions,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Error in handleCall:", error);
+      alert("An error occurred. Please try again later.");
     }
   };
-
   const handleDisconnect = () => {
     setCallStatus(CallStatus.FINISHED);
     vapi.stop();

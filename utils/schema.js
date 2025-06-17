@@ -23,3 +23,8 @@ export const UserAnswer = pgTable('userAnswer', {
     userEmail: varchar('userEmail'),
     createdAt: varchar('createdAt')
 });
+
+export const allowedUsers = pgTable('allowedUsers', {
+    email: varchar('email').primaryKey(),
+    status: varchar('status')
+});
