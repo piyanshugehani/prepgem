@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/lib/actions/auth.action";
 
-const Feedback = async ({ params }: RouteParams) => {
+const Feedback = async ({ params }) => {
   const { id } = await params;
   const user = await getCurrentUser();
 
@@ -19,7 +19,7 @@ const Feedback = async ({ params }: RouteParams) => {
 
   const feedback = await getFeedbackByInterviewId({
     interviewId: id,
-    userId: user?.id!,
+    userId: user?.id,
   });
 
   return (
