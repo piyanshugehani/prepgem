@@ -2,8 +2,12 @@ import Image from "next/image";
 
 import { cn, getTechLogos } from "@/lib/utils";
 
-const DisplayTechIcons = async ({ techStack }: TechIconProps) => {
-  const techIcons = await getTechLogos(techStack);
+function DisplayTechIcons({ techStack = [] }) {
+  const techIcons = getTechLogos(techStack);
+
+  if (!techIcons?.length) {
+    return null;
+  }
 
   return (
     <div className="flex flex-row">
@@ -28,6 +32,6 @@ const DisplayTechIcons = async ({ techStack }: TechIconProps) => {
       ))}
     </div>
   );
-};
+}
 
 export default DisplayTechIcons;
