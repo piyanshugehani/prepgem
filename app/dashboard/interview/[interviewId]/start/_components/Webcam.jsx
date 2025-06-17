@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useRef, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import Image from 'next/image';
@@ -12,108 +13,93 @@ import { toast } from 'sonner';
 import { LoaderCircle, Mic } from 'lucide-react';
 import { CircleStopIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Groq from 'groq-sdk';
 
 function WebcamComponent({data, interviewQues, activeIndex, setActiveIndex, userAnswers, onAnswerUpdate}) {
   const [userAns, setUserAns] = useState('');
   const [isRecording, setIsRecording] = useState(false);
-  // const [loader, setLoader] = useState(false);
-  // const {user} = useUser();
   const router = useRouter();
-
-  const recognitionRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const [audioChunks, setAudioChunks] = useState([]);
   const [loader,setLoader]=useState(false);
-  const {user}=useUser();   //get user data through user hook for email
+  const {user}=useUser();
 
   useEffect(() => {
-    if (!('webkitSpeechRecognition' in window)) {
-      console.error('Speech Recognition not supported in this browser.');
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      console.error('Audio Recording not supported in this browser.');
       return;
     }
 
-    const recognition = new webkitSpeechRecognition();
-    recognition.continuous = true;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
-
-    recognition.onstart = () => {
-      console.log('Recognition started');
-      setIsRecording(true);
-    };
-
-    recognition.onerror = (event) => {
-      if (event.error === 'no-speech') {
-        console.error('No speech detected. Please try again.');
-      } else {
-        console.error('Speech Recognition Error:', event.error);
-      }
-    };
-
-    recognition.onend = () => {
-      console.log('Recognition ended');
-      setIsRecording(false);
-    };
-
-    const handleSpeechRecognition = () => {
-      return new Promise((resolve, reject) => {
-        
-        recognition.onresult = (event) => {
-          const transcript = Array.from(event.results)
-            .map(result => result[0]?.transcript)
-            .join('');
-          console.log('Transcript:', transcript);
-          setUserAns(transcript)
-          resolve(transcript);
-        };
-        
-
-        recognition.onerror = (event) => {
-          reject(new Error(`Speech Recognition Error: ${event.error}`));
-        };
-
-        recognition.start();
-      });
-      
-      
-    };
-
-    recognitionRef.current = {
-      recognition,
-      handleSpeechRecognition
-    };
-
     return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.recognition.stop();
-        recognitionRef.current = null;
-        console.log('Recognition stopped on component unmount');
+      if (mediaRecorderRef.current && isRecording) {
+        mediaRecorderRef.current.stop();
       }
     };
   }, []);
 
   const startRecording = async () => {
-    if (recognitionRef.current) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      setAudioChunks([]);
+
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          setAudioChunks(currentChunks => [...currentChunks, event.data]);
+        }
+      };
+
+      mediaRecorderRef.current.start(1000);
+      setIsRecording(true);
+    } catch (error) {
+      console.error('Error accessing microphone:', error);
+      toast.error('Failed to access microphone');
+    }
+  };
+
+  const stopRecording = async () => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+
       try {
-        const transcript = await recognitionRef.current.handleSpeechRecognition();
-        setUserAns(transcript);
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' }); // Changed to WAV format
+        
+        if (audioBlob.size === 0) {
+          throw new Error('No audio data recorded');
+        }
+
+        // Create a File object instead of FormData
+        const audioFile = new File([audioBlob], 'audio.wav', { type: 'audio/wav' });
+        
+        const groq = new Groq({
+          apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
+          dangerouslyAllowBrowser: true
+        });
+        
+        const transcription = await groq.audio.transcriptions.create({
+          file: audioFile,
+          model: "distil-whisper-large-v3-en",
+          response_format: "verbose_json",
+        });
+        
+        setUserAns(transcription.text);
       } catch (error) {
-        console.error(error);
+        console.error('Transcription error:', error);
+        toast.error(error.message || 'Failed to transcribe audio');
       }
+
+      mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+      setAudioChunks([]);
     }
   };
 
-  const stopRecording = () => {
-    if (recognitionRef.current) {
-      recognitionRef.current.recognition.stop();
-    }
-  };
-
-  const handleButtonClick = async() => {
+  const handleButtonClick = async () => {
     if (isRecording) {
-      stopRecording();
+      await stopRecording();
     } else {
-      startRecording();
+      await startRecording();
     }
-    setIsRecording(!isRecording);
   };
 
   const handleSaveAnswer = () => {
@@ -125,7 +111,6 @@ function WebcamComponent({data, interviewQues, activeIndex, setActiveIndex, user
   const handleEndInterview = async () => {
     setLoader(true);
     try {
-      // Process all answers
       for (let i = 0; i < interviewQues.length; i++) {
         if (userAnswers[i]) {
           const feedbackPrompt = `Question: ${interviewQues[i]?.question}, User's answer: ${userAnswers[i]}, depending on given question and user's answer please give a rating (out of 10) for the answer and feedback as area of improvement if any, and also a recommended answer for the user if you were in his place, in max 3-4 lines in JSON format with rating,feedback and answer as fields in JSON.`;
@@ -159,29 +144,66 @@ function WebcamComponent({data, interviewQues, activeIndex, setActiveIndex, user
   };
 
   return (
-    <div>
-      <div className='flex justify-end items-center gap-2'>
-        
-        {activeIndex != interviewQues?.length-1 && <Button onClick={() => setActiveIndex(activeIndex+1)}>Next{" >"}</Button>}
-        {activeIndex == interviewQues?.length-1 && 
-          <Button onClick={handleEndInterview} disabled={loader}>
-            {loader ? <LoaderCircle className='animate-spin'/> : 'End Interview'}
+    <div className="min-h-screen p-4 text-foreground">
+      <div className="flex justify-end space-x-2 mb-4">
+       
+        {activeIndex !== interviewQues?.length-1 && (
+          <Button onClick={() => setActiveIndex(activeIndex+1)}>Next{" >"}</Button>
+        )}
+        {activeIndex === interviewQues?.length-1 && (
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={handleEndInterview}
+            disabled={loader}
+          >
+            {loader ? <LoaderCircle className="h-4 w-4 animate-spin" /> : 'End Interview'}
           </Button>
-        }
+        )}
       </div>
+
       <div className='flex flex-col justify-center items-center bg-black my-5 rounded-lg p-10'>
         <Image src={"/cam.jpg"} width={150} height={200} className='absolute' />
         <Webcam mirrored={true} style={{ zIndex: 100, height: 250, width: '100%' }} />
       </div>
-      <div className='flex items-center gap-2'>
-        <Button variant="outline" className="my-1" onClick={handleButtonClick}>
-          {isRecording ? <><span className='text-red-500 flex gap-1'><CircleStopIcon size={18}/>Recording..</span></> : <span className='flex gap-1'><Mic size={18}/>Record Answer</span>}
-        </Button>
-        <Button variant="outline" onClick={handleSaveAnswer}>Save Answer</Button>
+
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            className="flex-1 my-1" 
+            onClick={handleButtonClick}
+          >
+            {isRecording ? (
+              <span className='text-red-500 flex gap-1'>
+                <CircleStopIcon size={18} />
+                Recording..
+              </span>
+            ) : (
+              <span className='flex gap-1'>
+                <Mic size={18} />
+                Record Answer
+              </span>
+            )}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={handleSaveAnswer}
+          >
+            Save
+          </Button>
+        </div>
+
+        {userAns && (
+          <div className="bg-gray-900 rounded-lg border p-4 transition-all duration-300">
+            <p className="text-sm text-gray-100">
+              {userAns}
+            </p>
+          </div>
+        )}
+        </div>
       </div>
-      
-      <h2 className='mx-2'>{userAns}</h2>
-    </div>
+    
   );
 }
 

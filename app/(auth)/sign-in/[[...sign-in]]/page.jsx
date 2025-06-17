@@ -78,7 +78,7 @@ export default function Page() {
             quibusdam aperiam voluptatum.
           </p>
         </div>
-        <SignIn forceRedirectUrl="/how-it-works/" />
+        <SignIn forceRedirectUrl="/dashboard/" />
       </div>
     </main>
   </div>

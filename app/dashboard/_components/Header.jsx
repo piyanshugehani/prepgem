@@ -18,14 +18,15 @@ function Header() {
       <h1 className="text-white text-2xl font-bold ml-2">HirePrepAI</h1>
       </div>
       <ul className='hidden md:flex gap-8'>
-        <li>
-          <Link href="/how-it-works" className={`text-gray-300 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-white after:transition-all after:duration-300 cursor-pointer ${path == '/how-it-works' && 'after:w-full'}`}>
-            How it works?
-          </Link>
-        </li>
+        
         <li>
           <Link href="/dashboard" className={`text-gray-300 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-white after:transition-all after:duration-300 cursor-pointer ${path == '/dashboard' && 'after:w-full'}`}>
             Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link href="/how-it-works" className={`text-gray-300 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-white after:transition-all after:duration-300 cursor-pointer ${path == '/how-it-works' && 'after:w-full'}`}>
+            How it works?
           </Link>
         </li>
         <li>
@@ -33,6 +34,8 @@ function Header() {
             Questions
           </Link>
         </li>
+        
+        
         
         {/* <li>
           <Link href="/upgrade" className={`text-gray-300 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-white after:transition-all after:duration-300 cursor-pointer ${path == '/upgrade' && 'after:w-full'}`}>

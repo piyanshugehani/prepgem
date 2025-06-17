@@ -71,7 +71,7 @@ function AddNew() {
 
     return (
         <div>
-<section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-black to-slate-900 p-8 shadow-2xl">
+<section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-black/90 to-slate-900 p-8 shadow-2xl">
   <div className="flex items-center justify-between">
     <div className="flex flex-col gap-6 max-w-full z-10">
       <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-purple-300 bg-clip-text text-transparent">
@@ -80,12 +80,20 @@ function AddNew() {
       <p className="text-lg text-slate-300">
         Practice real interview questions & get instant feedback
       </p>
-      <Button 
-        onClick={() => setOpenDialog(true)} 
-        className="bg-gradient-to-r from-purple-200 to-purple-400 hover:from-purple-400 hover:to-purple-300 text-gray-800 font-semibold px-8 py-3 rounded-xl w-fit shadow-lg transition-all duration-200 hover:scale-105"
-      >
-        Start a New Interview
-      </Button>
+      <div className="flex gap-4">
+        <Button 
+          onClick={() => setOpenDialog(true)} 
+          className="bg-gradient-to-r from-purple-200 to-purple-400 hover:from-purple-400 hover:to-purple-300 text-gray-800 font-semibold px-8 py-3 rounded-xl w-fit shadow-lg transition-all duration-200 hover:scale-105"
+        >
+          Start New Interview with JD
+        </Button>
+        <Button 
+          onClick={() => router.push('/interview')} 
+          className="bg-gray-900 hover:bg-gray-900 border border-white/20 text-white font-semibold px-8 py-3 rounded-xl w-fit shadow-lg transition-all duration-200 hover:scale-105"
+        >
+          Have a 1-1 Interview with AI
+        </Button>
+      </div>
     </div>
 
     <div className="relative">
