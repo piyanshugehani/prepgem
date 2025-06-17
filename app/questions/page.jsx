@@ -3,10 +3,12 @@ import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import Header from '../dashboard/_components/Header'
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function Page() {
   const toolRefs = useRef([]);
   toolRefs.current = [];
+  const router = useRouter();
 
   const addToRefs = (el) => {
     if (el && !toolRefs.current.includes(el)) {
@@ -117,7 +119,10 @@ function Page() {
                 <h3 className="text-xl font-semibold bg-gradient-to-r from-purple-200 to-purple-300 bg-clip-text text-transparent">{tool.name}</h3>
                 <p className="mt-3 text-gray-300 h-24">{tool.description}</p>
                 <div className="mt-4">
-                  <button className="inline-block bg-gradient-to-r from-purple-500 to-purple-700 text-white py-2 px-6 rounded-lg hover:from-purple-600 hover:to-purple-800 transition-all shadow-md hover:shadow-purple-500/25">
+                  <button 
+                    onClick={() => router.push('/interview')}
+                    className="inline-block bg-gradient-to-r from-purple-500 to-purple-700 text-white py-2 px-6 rounded-lg hover:from-purple-600 hover:to-purple-800 transition-all shadow-md hover:shadow-purple-500/25"
+                  >
                     Access Tool
                   </button>
                 </div>
