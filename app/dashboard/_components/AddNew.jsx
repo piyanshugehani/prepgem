@@ -80,16 +80,16 @@ function AddNew() {
       <p className="text-lg text-slate-300">
         Practice real interview questions & get instant feedback
       </p>
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-4">
         <Button 
           onClick={() => setOpenDialog(true)} 
-          className="bg-gradient-to-r from-purple-200 to-purple-400 hover:from-purple-400 hover:to-purple-300 text-gray-800 font-semibold px-8 py-3 rounded-xl w-fit shadow-lg transition-all duration-200 hover:scale-105"
+          className="bg-gradient-to-r from-purple-200 to-purple-400 hover:from-purple-400 hover:to-purple-300 text-gray-800 font-semibold px-4 sm:px-8 py-3 rounded-xl w-full sm:w-fit text-sm sm:text-base shadow-lg transition-all duration-200 hover:scale-105"
         >
           Start New Interview with JD
         </Button>
         <Button 
           onClick={() => router.push('/interview')} 
-          className="bg-gray-900 hover:bg-gray-900 border border-white/20 text-white font-semibold px-8 py-3 rounded-xl w-fit shadow-lg transition-all duration-200 hover:scale-105"
+          className="bg-gray-900 hover:bg-gray-900 border border-white/20 text-white font-semibold px-4 sm:px-8 py-3 rounded-xl w-full sm:w-fit text-sm sm:text-base shadow-lg transition-all duration-200 hover:scale-105"
         >
           Have a 1-1 Interview with AI
         </Button>
