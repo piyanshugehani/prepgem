@@ -207,7 +207,7 @@ const Agent = ({
           </div>
 
           {/* User Profile Card */}
-          <div className="flex flex-col items-center p-8 bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl border border-gray-800 shadow-lg hover:shadow-purple-500/10 transition-all duration-300 w-72">
+          <div className="hidden md:flex flex-col items-center p-8 bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl border border-gray-800 shadow-lg hover:shadow-purple-500/10 transition-all duration-300 w-72">
             <Image
               src="/user.svg"
               alt="profile-image"
@@ -218,7 +218,6 @@ const Agent = ({
             <h3 className="mt-6 text-xl font-semibold text-white">{userName}</h3>
           </div>
         </div>
-
         {messages.length > 0 && (
           <div className="w-full max-w-4xl mx-auto mb-16">
             <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 p-8 rounded-2xl border border-gray-800 shadow-lg">
