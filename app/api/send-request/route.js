@@ -42,13 +42,15 @@ export async function POST(req) {
     // 4. Email content
     const approveUrl = `https://ai-prep-gem.vercel.app/api/handle-request?action=approve&email=${encodeURIComponent(userEmail)}`;
     const rejectUrl = `https://ai-prep-gem.vercel.app/api/handle-request?action=reject&email=${encodeURIComponent(userEmail)}`;
+    const temporaryUrl = `https://ai-prep-gem.vercel.app/api/handle-request?action=temporary&email=${encodeURIComponent(userEmail)}`;
     
     const html = `
       <h2>Access Request</h2>
       <p>User ${userEmail} has requested access.</p>
       <p>
         <a href="${approveUrl}">Approve</a> | 
-        <a href="${rejectUrl}">Reject</a>
+        <a href="${rejectUrl}">Reject</a> |
+        <a href="${temporaryUrl}">Approve temporarily</a>
       </p>
     `;
 
