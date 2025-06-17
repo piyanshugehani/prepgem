@@ -97,7 +97,7 @@ export const mappings = {
   "aws amplify": "amplify",
 };
 
-export const interviewer: CreateAssistantDTO = {
+export const interviewer = {
   name: "Interviewer",
   firstMessage:
     "Hello! Thank you for taking the time to speak with me today. I'm excited to learn more about you and your experience.",
@@ -136,7 +136,7 @@ Be professional, yet warm and welcoming:
 Use official yet friendly language.
 Keep responses concise and to the point (like in a real voice interview).
 Avoid robotic phrasing—sound natural and conversational.
-Answer the candidate’s questions professionally:
+Answer the candidate's questions professionally:
 
 If asked about the role, company, or expectations, provide a clear and relevant answer.
 If unsure, redirect the candidate to HR for more details.
@@ -155,43 +155,43 @@ End the conversation on a polite and positive note.
   },
 };
 
-export const feedbackSchema = z.object({
+export const feedbackSchema = {
   totalScore: z.number(),
-  categoryScores: z.tuple([
-    z.object({
-      name: z.literal("Communication Skills"),
+  categoryScores: [
+    {
+      name: "Communication Skills",
       score: z.number(),
       comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Technical Knowledge"),
+    },
+    {
+      name: "Technical Knowledge", 
       score: z.number(),
       comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Problem Solving"),
+    },
+    {
+      name: "Problem Solving",
+      score: z.number(), 
+      comment: z.string(),
+    },
+    {
+      name: "Cultural Fit",
+      score: z.number(),
+      comment: z.string(), 
+    },
+    {
+      name: "Confidence and Clarity",
       score: z.number(),
       comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Cultural Fit"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Confidence and Clarity"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-  ]),
-  strengths: z.array(z.string()),
-  areasForImprovement: z.array(z.string()),
-  finalAssessment: z.string(),
-});
+    },
+  ],
+  strengths: [],
+  areasForImprovement: [],
+  finalAssessment: "",
+};
 
 export const interviewCovers = [
   "/adobe.png",
-  "/amazon.png",
+  "/amazon.png", 
   "/facebook.png",
   "/hostinger.png",
   "/pinterest.png",
@@ -204,7 +204,7 @@ export const interviewCovers = [
   "/yahoo.png",
 ];
 
-export const dummyInterviews: Interview[] = [
+export const dummyInterviews = [
   {
     id: "1",
     userId: "user1",
@@ -217,7 +217,7 @@ export const dummyInterviews: Interview[] = [
     createdAt: "2024-03-15T10:00:00Z",
   },
   {
-    id: "2",
+    id: "2", 
     userId: "user1",
     role: "Full Stack Developer",
     type: "Mixed",
